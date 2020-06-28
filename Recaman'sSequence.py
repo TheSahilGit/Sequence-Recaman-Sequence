@@ -1,3 +1,6 @@
+"""Visualizing the Recaman's Sequence"""
+### Sahil Islam ###
+### 28/06/2020 ###
 import numpy as np
 import matplotlib.pyplot as plt
 import pygame
@@ -36,38 +39,37 @@ def Plot(n):
     plt.show()
 
 
-pygame.init()
-width = 1000
-height = 600
-screen = pygame.display.set_mode((width, height))
-white = (255, 255, 255)
-black = (0, 0, 0)
-red = (255, 0, 0)
-clock = pygame.time.Clock()
+def circularVisual(n):
+    pygame.init()
+    width = 1000
+    height = 600
+    screen = pygame.display.set_mode((width, height))
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+    red = (255, 0, 0)
+    clock = pygame.time.Clock()
 
+    def circle(x, y, r):
+        pygame.draw.circle(screen, red, (int(x), int(y)), int(r), 2)
 
-def circle(x, y, r):
-    pygame.draw.circle(screen, red, (int(x), int(y)), int(r), 2)
+    series = recaman(n)
 
+    scale = 5
 
-series = recaman(100)
+    screen.fill(black)
+    while True:
+        for i in range(len(series) - 1):
 
-scale = 5
+            yo = height / 2.
+            r = abs(series[i + 1] - series[i]) / 2.
+            xo = r + series[i]
 
-screen.fill(black)
-while True:
-    for i in range(len(series) - 1):
+            circle(scale * xo, yo, scale * r)
 
-        yo = height / 2.
-        r = abs(series[i + 1] - series[i]) / 2.
-        xo = r + series[i]
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
 
-        circle(scale * xo, yo, scale * r)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-
-        pygame.display.update()
-        clock.tick(5)
+            pygame.display.update()
+            clock.tick(5)
